@@ -53,6 +53,7 @@ app.directive('donutChart', function() {
       // equivalent to: scope.$parent.$parent.data = newData;
       // we can't just do `scope.data` since that will only override this
       // scopes `data` property, shadowing the root scopes `data` property.
+      // see *-part2.html for a better version.
       scope.$root.data = newData;
 
       // yo angular! we made a change to the scope.
