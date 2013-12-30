@@ -1,0 +1,70 @@
+<!-- 
+  example of a directive donut directive. notice how we're only reading from the scope.
+ -->
+<!DOCTYPE html>
+<html>
+<script src="d3.js"></script>
+<script src="angular.js"></script>
+<style>
+  body{
+    text-align: center;
+  }
+  donut-chart{
+    width: 450px;
+    height: 450px;
+    display:inline-block;
+  }
+</style>
+<body ng-app="myApp">
+  <div ng-init="chartData=[82, 82, 10, 32]">
+    <donut-chart data="chartData"></donut-chart>
+  </div>
+
+  <script>
+
+var app = angular.module('myApp', []);
+
+app.directive('donutChart', function() {
+
+  return {
+    scope: { 'data': '=' },
+    restrict: 'E',
+    link: link
+  };
+
+  function link(scope, element) {
+    // the D3 bits..
+    var color = d3.scale.category10();
+    var el = element[0];
+    var data = scope.data;
+    var width = el.clientWidth;
+    var height = el.clientHeight;
+    var min = Math.min(width, height);
+    var pie = d3.layout.pie().sort(null);
+    var arc = d3.svg.arc()
+      .outerRadius(min / 2 * 0.9)
+      .innerRadius(min / 2 * 0.5);
+    var svg = d3.select(el).append('svg')
+      .attr({width: width, height: height})
+      .append('g')
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+    
+    // create the arc <path>s
+    var arcs = svg.selectAll('path').data(pie(data))
+      .enter().append('path')
+      .attr('fill', function(d, i) { return color(i); })
+      .style('stroke', 'white')
+      .attr('d', arc);
+
+
+    svg.on('mousedown', function(d) {
+      // change the data
+      data = d3.range(4).map(function(d){ return Math.random(); });
+      // update the arc <path>s
+      arcs.data(pie(data)).attr('d', arc);
+    });
+
+  }
+});
+
+  </script>
