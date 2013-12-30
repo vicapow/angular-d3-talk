@@ -1,0 +1,11 @@
+<donut-chart data="data" accessor="accessor"></donut-chart>
+
+<div class="controls">
+  <button ng-click="done()">done</button>
+  <button ng-click="add()">add</button>
+  <div ng-repeat="datum in data">
+    <input ng-model="datum.label"></input>
+    <input ng-model="datum.value"></input>
+    <button ng-click="remove(datum)">remove</button>
+  </div>
+</div>
