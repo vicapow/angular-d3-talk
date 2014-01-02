@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>The love child of Angular and D3</title>
+
+    <meta name="description" content="The love child of Angular and D3">
+    <meta name="author" content="Victor Powell">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <style>
+    .reveal section img {
+      border: none;
+      background: none;
+      box-shadow: none;
+    }
+    .inline-title h1, .inline-title h3{
+        display: inline-block;
+    }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>The love child of Angular and D3</h1>
+          <h3></h3>
+          <p>
+            <small>Created by <a href="http://vctr.me">Victor Powell</a> / <a href="http://twitter.com/vicapow">@vicapow</a></small>
+          </p>
+        </section>
+
+        <section>
+          <section data-markdown>
+            # About me
+            ### (aka., why you should listen to me)
+          </section>
+          <section data-markdown>
+            # I build dashboards
+          </section>
+          <section data-markdown>
+            ![](img/monsoonco-logo-black-bg.png)
+          </section>
+          <section data-markdown>
+            ![](img/hp-spog-1.png)
+          </section>
+          <section data-markdown>
+            # I teach
+          </section>
+          <section data-markdown>
+            ![](img/hackreactor-logo-white-bg.png)
+          </section>
+          <section data-markdown>
+            # I like to explain things
+          </section>
+          <section data-markdown>
+            ![](img/central-limit-theorem.png)
+          </section>
+          <section data-markdown>
+            ![](img/monty-hall.png)
+          </section>
+          <section data-markdown>
+            ![](img/simpsons-paradox.png)
+          </section>
+          <section data-markdown>
+            # I'm writing a book
+          </section>
+          <section data-markdown>
+            ![](img/d3-on-angular.png)
+          </section>
+          <section>
+            <h2>Have datavis work?</h2>
+            <aside>lets talk: <a href="me@vctr.me">me@vctr.me</a></aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ![](img/hello-kitty.png)
+
+              ok.. no more ads
+            </div>
+            <aside class="notes">
+              + I don't like ads...
+              + ad-blocker.png -> hello-kitty.png
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            # An (extremely) brief intro to [D3](http://d3js.org)
+          </section>
+          <section data-markdown>
+            # D3
+          </section>
+          <section>
+            <div class="inline-title">
+              <h1>D</h1><h3>ata</h3><h1>D</h1><h3>riven</h3><h1>D</h1><h3>ocuments</h3>
+            </div>
+            <aside class="notes">
+              + creating, updating, or removing DOM
+              + based on data
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              # D3(data) -> DOM
+            </div>
+            <aside class="notes">
+              + helper functions
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              # Simple example
+            </div>
+          </section>
+          <section>
+            Data
+            <pre><code class="javascript">
+              // somehow you get data
+              var data = [20, 50, 80];
+            </code></pre>
+            D3
+            <pre><code class="javascript">
+              d3.select('body').selectAll('div').data(data)
+                .enter().append('div')
+                  // set the width based on the current data item
+                  .style('width', function(d){ return d + '%' });
+            </code></pre>
+            DOM
+            <pre><code class="html">
+                &lt;!DOCTYPE html&gt;
+                &lt;html&gt;
+                  &lt;div style="width:20%;"&gt;&lt;/div&gt;
+                  &lt;div style="width:50%;"&gt;&lt;/div&gt;
+                  &lt;div style="width:80%;"&gt;&lt;/div&gt;
+                &lt;/html&gt;
+            </code></pre>
+            <small><a href="http://jsfiddle.net/KX3eR/">demo</a></small>
+            <aside class="notes">
+              + helper functions
+              + pass on details
+            </aside>
+          </section>
+          <section>
+            <iframe width="100%" height="400px" src="http://jsfiddle.net/KX3eR/embedded/result/"></iframe>
+          </section>
+          <section>
+            <div data-markdown>
+              # Layouts
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              # d3.layout.pie()
+            </div>
+            <aside class="notes">
+              + sense of flexibility
+              + we'll see again
+            </aside>
+          </section>
+          <section>
+            data
+            <pre><code class="javascript">
+              var data = [35, 28, 73];
+            </code></pre>
+            pie layout
+            <pre><code class="javascript">
+              var pie = d3.layout.pie();
+            </code></pre>
+            Pie layout result
+            <pre><code class="javascript">
+              pie(data); // -> result...
+            </code></pre>
+          </section>
+          <section>
+            <div data-markdown>
+              result of 
+              ````javascript
+                pie([35, 28, 72]); // result -->
+                [{
+                  data:35,
+                  value:35,
+                  startAngle:3.37,
+                  endAngle:4.99
+                },{
+                  data:28,
+                  value:28,
+                  startAngle:4.99,
+                  endAngle:6.28
+                },{
+                  data:73,
+                  value:73,
+                  startAngle:0,
+                  endAngle:3.37
+                }]
+              ````
+            </div>
+            <aside class="notes">
+              + dependencies (changing one of the original data values effects every start/end angle)
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                  // create a new arc generator. (a thing that takes a pie layout 
+                  // and produces new arc shaped &lt;path&gt; tags).
+                  var arc = d3.svg.arc().innerRadius(100).outerRadius(200);
+                  // go and actually create the arcs, passing each data element 
+                  // of the pie layout to the arc generator.
+                  d3.select('svg').selectAll('path').data(pie(data))
+                    .enter().append('path')
+                      .attr('d', arc);
+              ````
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              ````css
+                path{
+                  stroke-width: 10;
+                  stroke: white;
+                }
+              ````
+          </section>
+          <section>
+            <iframe width="100%" height="500px" src="http://jsfiddle.net/uxQD6/embedded/result/"></iframe>
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                  d3.select('svg').append('g')
+                    // nudge all the content in the svg down and to the right
+                    .attr('transform', 'translate(200, 200)')
+                    .selectAll('path').data(pie(data))
+                    .enter().append('path')
+                      .attr('d', arc);
+              ````
+            </div>
+          </section>
+          <section>
+            <iframe width="100%" height="500px" src="http://jsfiddle.net/sm3KY/embedded/result/"></iframe>
+          </section>
+          <section data-markdown>
+            # Additional Resources
+          </section>
+          <section data-markdown>
+            # [Let's Make a Bar Chart](http://bost.ocks.org/mike/bar/)
+            intro to D3 by Mike Bostock
+          </section>
+          <section data-markdown>
+            # [Thinking with Joins](http://bost.ocks.org/mike/join/)
+            also by Mike Bostock
+
+            explains this black magic:
+            ````javascript
+              d3.select('svg').append('g')
+                .selectAll('path').data(pie(data))
+                .enter().append('path')
+                  .attr('d', arc);
+            ````
+          </section>
+          <section data-markdown>
+            "What's this 'SVG' you speak of?"
+            # [An SVG Primer](http://alignedleft.com/tutorials/d3/an-svg-primer)
+            by Scott Murray
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            ![](http://i.imgur.com/KSC5BJz.jpg)
+          </section>
+          <section>
+            <div data-markdown>
+              wouldn't it be awesome if we could just do...
+              ````html
+                &lt;donut-chart&gt;&lt;/donut-chart&gt;
+              ````
+            </div>
+            <aside class="notes">
+              + modularity (separation of concerns)
+              + re-usability
+              + easier dependency injection via the scope
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              yes. yes it would.
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              # Let's do it!
+            </div>
+            <aside class="notes">
+              + make a donut chart directive
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                var app = angular.module('myApp', []);
+                app.directive('donutChart', function() {
+                  return { restrict: 'E', link: function(scope, element) {
+                    // D3 bits...
+                  }};
+                });
+              ````
+            </div>
+            <aside class="notes">
+              + name 'donutChart' -> donut-chart
+              + 'E' restrict to elements named donut-chart
+              + the `link`
+              + element exists. go to town adding
+                + manipulate/adding inner DOM
+                + adding event listeners
+                + etc...
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              D3 bits...
+              ````javascript
+                var data = [82, 62, 10, 32];
+                var width = 500, height = 500;
+                var pie = d3.layout.pie().sort(null);
+                var arc = d3.svg.arc()
+                  .outerRadius(width / 2 * 0.9)
+                  .innerRadius(width / 2 * 0.5);
+                var svg = d3.select(element[0]).append('svg')
+                  .attr({width: width, height: height})
+                  .append('g')
+                    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+                // add the &lt;path&gt;s for each arc slice
+                svg.selectAll('path').data(pie([82, 62, 10, 32]))
+                  .enter().append('path')
+                    .style('stroke', 'white')
+                    .attr('d', arc);
+              ````
+            </div>
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app=&quot;myApp&quot;&gt;
+    &lt;donut-chart&gt;&lt;/donut-chart&gt;
+  &lt;/body&gt;
+              </code></pre>
+              <div data-markdown>
+                [demo](/demos/lets-make-a-donut-chart-directive/v0.5.directive.html)
+              </div>
+          </section>
+          <section data-markdown>
+            but new donut charts will all have the same data...
+          </section>
+          <section>
+            <div data-markdown>
+              ![](http://i.imgur.com/oYjDmnG.jpg)
+            </div>
+            <aside class="notes">
+              + opposite of modular
+              + changing the data means changing the directive
+              + allow your directive's data to be configurable via the scope
+            </aside>
+          </section>
+          <section data-markdown>
+            # The scope
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app="myApp" ng-init="data=[82, 62, 10, 32]"&gt;
+    &lt;donut-chart&gt;&lt;/donut-chart&gt;
+  &lt;/body&gt;
+              </code></pre>
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                var app = angular.module('myApp', []);
+                app.directive('donutChart', function() {
+                  return { restrict: 'E', link: function(scope, element) {
+                    // use `scope.data`
+                    var data = scope.data;
+                    // carry on...
+                  }};
+                });
+              ````
+            </div>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              Mkay
+            </div>
+            <aside class="notes">
+              + good but we can do better
+            </aside>
+          </section>
+          <section data-markdown>
+            # Isolate scope
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                var app = angular.module('myApp', []);
+                app.directive('donutChart', function() {
+                  return { 
+                    restrict: 'E',
+                    scope: { data: '=' } // isolate scope
+                    link: function(scope, element) {
+                    var data = scope.data;
+                    // etc...
+                  }};
+                });
+              ````
+            </div>
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app="myApp" ng-init="data=[82, 62, 10, 32]"&gt;
+    &lt;donut-chart data="data"&gt;&lt;/donut-chart&gt;
+  &lt;/body&gt;
+              </code></pre>
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app="myApp" ng-init="heights=[82, 62, 10, 32]"&gt;
+    &lt;donut-chart data="heights"&gt;&lt;/donut-chart&gt;
+  &lt;/body&gt;
+              </code></pre>
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app="myApp" ng-init="whateverWeWant=[82, 62, 10, 32]"&gt;
+    &lt;donut-chart data="whateverWeWant"&gt;&lt;/donut-chart&gt;
+  &lt;/body&gt;
+              </code></pre>
+          </section>
+          <section data-markdown>
+            # Great
+          </section>
+          <section>
+            <div data-markdown>
+              # Sharing data
+            </div>
+            <aside class="notes">
+              + for free
+            </aside>
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app="myApp" ng-init="myData=[82, 62, 10, 32]"&gt;
+    &lt;donut-chart data="myData"&gt;&lt;/donut-chart&gt;
+    &lt;donut-chart data="myData"&gt;&lt;/donut-chart&gt;
+  &lt;/body&gt;
+              </code></pre>
+              <a href="../demos/lets-make-a-donut-chart-directive/v2-sharing-data.html">demo</a>
+              <aside class="notes">
+                + share data
+              </aside>
+          </section>
+          <section data-markdown>
+            # ng-repeat
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app="myApp" ng-init="charts=[[5, 3], [1, 2], [2, 2]]"&gt;
+    &lt;donut-chart data="data" ng-repeat="data in charts"&gt;&lt;/donut-chart&gt;
+  &lt;/body&gt;
+              </code></pre>
+              <a href="../demos/lets-make-a-donut-chart-directive/v2.1-sharing-data.html">demo</a>
+              <aside class="notes">
+              </aside>
+          </section>
+          <section data-markdown>
+            but what if our data changes?
+          </section>
+          <section data-markdown>
+            there's nothing you can do.
+          </section>
+          <section data-markdown>
+            jk
+          </section>
+          <section data-markdown>
+            # $watch / $apply
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                var data = scope.data;
+
+                var arcs = svg.selectAll('path').data(pie(data))
+                  .enter().append('path')
+                  .attr('d', arc);
+
+                svg.on('mousedown', function(d) {
+                  // change the data
+                  data = d3.range(4).map(function(d){ return Math.random(); });
+                  // update the &lt;path&gt; tags
+                  arcs.data(pie(data)).attr('d', arc);
+                });
+              ````
+              [demo](../demos/lets-make-a-donut-chart-directive/v3-updating-data.html)
+            </div>
+            <aside class="notes">
+              + idomatic d3
+              + seems to work, until...
+            </aside>
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app=&quot;myApp&quot;&gt;
+    &lt;div ng-init=&quot;chartData=[82, 82, 10, 32]&quot;&gt;
+      &lt;donut-chart data=&quot;chartData&quot;&gt;&lt;/donut-chart&gt;
+      &lt;donut-chart data=&quot;chartData&quot;&gt;&lt;/donut-chart&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+              </code></pre>
+              <a href="../demos/lets-make-a-donut-chart-directive/v3.1-updating-data.html">demo</a>
+              <aside class="notes">
+                + angular never gets to know about our change
+              </aside>
+          </section>
+          <section data-markdown>
+            Wait, [WAT?](https://www.destroyallsoftware.com/talks/wat)
+          </section>
+          <section>
+            <div data-markdown>
+              Angular doesn't know the scope changed.
+            </div>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section data-markdown>
+            ````javascript
+              // the Backbone/Ember way
+              model.set('something', 'someValue');
+            ````
+          </section>
+          <section data-markdown>
+            ````javascript
+              // the Angular way
+              scope.something = 'someValue';
+            ````
+          </section>
+          <section data-markdown>
+            how does it know?!
+          </section>
+          <section data-markdown>
+            ````javascript
+              var $setTimeout = function(callback, delay){
+                setTimeout(function(){
+                  // ie., after callback, check all the scopes for changes
+                  $scope.apply(function(){
+                    callback();
+                  });
+                }, delay);
+              }
+            ````
+          </section>
+          <section data-markdown>
+            it usually knows automatically if we use:
+            
+            + ng-mouseover
+            + ng-click
+            + $setTimeout
+            + $http
+            + etc...
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                svg.on('mousedown', function(d) {
+                  // some new data
+                  scope.data = d3.range(4).map(function(d){ return Math.random(); });
+                  // yo angular! we made a change to the scope
+                  scope.$apply();
+                });
+
+                scope.$watch('data', function(data) {
+                  // our data changed! update the arc &lt;path&gt;s
+                  arcs.data(pie(data)).attr('d', arc);
+                });
+              ````
+              [demo](../demos/lets-make-a-donut-chart-directive/v4-updating-shared-data-with-watch-and-apply.html)
+            </div>
+          </section>
+          <section data-markdown>
+            sweet
+          </section>
+          <section data-markdown>
+            Rrr.. wait a sec.. now ng-repeats don't work...
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app=&quot;myApp&quot;&gt;
+    &lt;div ng-init=&quot;data=[1, 4, 2, 5]&quot;&gt;
+      &lt;donut-chart data=&quot;data&quot; ng-repeat=&quot;item in [1, 2, 3]&quot;&gt;
+      &lt;/donut-chart&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+              </code></pre>
+              <a href="../demos/lets-make-a-donut-chart-directive/v4.1-updating-shared-data-with-watch-and-apply.html">demo</a>
+              <aside class="notes">
+              </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              `ng-repeat` items each get a new scope.
+
+              [(more on object inheristance)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#Inheritance)
+            </div>
+            <aside class="notes">
+              + an aside
+              + shadow's parent `data` prop.
+              + lots of hours lost in "scope hell"
+            </aside>
+          </section>
+          <section>
+            <pre><code class="html">
+  &lt;body ng-app=&quot;myApp&quot;&gt;
+    &lt;div ng-init=&quot;shared = { data: [1, 4, 2, 5] }&quot;&gt;
+      &lt;donut-chart data=&quot;shared.data&quot; ng-repeat=&quot;item in [1, 2, 3]&quot;&gt;
+      &lt;/donut-chart&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+              </code></pre>
+              <a href="../demos/lets-make-a-donut-chart-directive/v6-ng-repeat-and-scope-inheritance-part2.html">demo</a>
+              <aside class="notes">
+                + rocky mistake
+              </aside>
+          </section>
+          <section data-markdown>
+            awesome
+          </section>
+          <section>
+            <div data-markdown>
+              Rrrr... wait.. what about animation?
+            </div>
+            <aside class="notes">
+              + scope.$watch -> data changed
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              # Transitions
+            </div>
+          </section>
+          <section data-markdown>
+            ````javascript
+              // our data changed! update the arcs
+              scope.$watch('data', function(data){
+                arcs.data(pie(data)).transition().attrTween('d', arcTween);
+              });
+
+              // transition the arc angles
+              function arcTween(a) {
+                // see: http://bl.ocks.org/mbostock/1346410
+                var i = d3.interpolate(this._current, a);
+                this._current = i(0);
+                return function(t) {
+                  return arc(i(t));
+                };
+              }
+            ````
+          </section>
+          <section data-markdown>
+            [transitioning arc angles demo](../demos/arch-angels/index.html)
+          </section>
+          <section data-markdown>
+            whoops... lets try that again. [transitioning arc angles demo](../demos/lets-make-a-donut-chart-directive/v7-animation.html)
+          </section>
+
+          <section data-markdown>
+            okay, but things break if the length of our data doesn't remain the same. now what?
+          </section>
+          <section data-markdown>
+            # .enter() & .exit()
+          </section>
+          <section data-markdown>
+            ````javascript
+              scope.$watch('data', function(newData, oldData){
+                arcs = svg.selectAll('.arc').data(pie(data));
+                // 1.) animate the arcs that stayed around
+                // 2.) add and animate any new arcs (if newData.length > oldData.length)
+                // 3.) or remove any old arcs (if newData.length < oldData.length )
+              });
+            ````
+            [demo](../demos/lets-make-a-donut-chart-directive/v8-enter-and-exit.html)
+          </section>
+          <section>
+            <div data-markdown>
+              But wait! Our directive is _still_ modifying our data directly. That doesn't sound __modular__...
+            </div>
+            <aside class="notes">
+              + we'd have to create a new directive anytime our data changes...
+            </aside>
+          </section>
+          <section>
+            you're right, it's not
+          </section>
+          <section data-markdown>
+            # Separating out behavior
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                scope: { 'data': '=', 'onClick': '&' }
+              ````
+              ````javascript
+                // inside of `link`
+                svg.on('mousedown', function(d) {
+                  scope.$apply(function(){
+                    if(scope.onClick) scope.onClick();
+                  });
+                });
+              ````
+              [demo](../demos/lets-make-a-donut-chart-directive/v9-using-a-controller-and-seperating-out-business-logic.html)
+            </div>
+            <aside class="notes">
+              + '&' for binding behaviors
+              + now hour directive knows almost nothing about the outside world
+              + also using a controller instead of ng-init
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              [A donut factory app](../demos/a-donut-chart-editor/index.html)
+            </div>
+            <aside class="notes">
+              + why should you care?
+              + lets look at a fuller example
+            </aside>
+          </section>
+        </section>
+        <section>
+          <section data-markdown>
+            # FIN
+          </section>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

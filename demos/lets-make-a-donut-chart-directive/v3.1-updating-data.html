@@ -1,25 +1,32 @@
+<!-- 
+  example of a donut directive. notice we're still only reading the data from the scope and not modifying it.
+ -->
 <!DOCTYPE html>
 <html>
 <script src="d3.js"></script>
 <script src="angular.js"></script>
 <style>
   body{
-    margin: 0;
+    text-align: center;
   }
   donut-chart{
-    width: 100%;
-    height: 100%;
-    position: absolute;
+    width: 450px;
+    height: 450px;
+    display:inline-block;
   }
 </style>
 <body ng-app="myApp">
-  <donut-chart data="[82, 62, 10, 32]"></donut-chart>
+  <div ng-init="chartData=[82, 82, 10, 32]">
+    <donut-chart data="chartData"></donut-chart>
+    <donut-chart data="chartData"></donut-chart>
+  </div>
 
   <script>
 
 var app = angular.module('myApp', []);
 
 app.directive('donutChart', function() {
+
   return {
     scope: { 'data': '=' },
     restrict: 'E',
@@ -42,13 +49,22 @@ app.directive('donutChart', function() {
       .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
     
-    // add the <path>s for each arc slice
-    svg.selectAll('path').data(pie(scope.data))
+    // create the arc <path>s
+    var arcs = svg.selectAll('path').data(pie(scope.data))
       .enter().append('path')
-        .style('stroke', 'white')
-        .attr('d', arc)
-        .attr('fill', function(d, i){ return color(i) });
+      .attr('fill', function(d, i) { return color(i); })
+      .style('stroke', 'white')
+      .attr('d', arc);
+
+
+    svg.on('mousedown', function(d) {
+      // change the data
+      scope.data = d3.range(4).map(function(d){ return Math.random(); });
+      // update the arc <path>s
+      arcs.data(pie(scope.data)).attr('d', arc);
+    });
+
   }
 });
 
-</script>
+  </script>

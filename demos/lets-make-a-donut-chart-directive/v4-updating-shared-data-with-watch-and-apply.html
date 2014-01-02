@@ -49,19 +49,19 @@ app.directive('donutChart', function() {
       .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
     
+    // add the arcs
+    var arcs = svg.selectAll('path').data(pie(scope.data))
+      .enter().append('path')
+      .attr('fill', function(d, i) { return color(i); })
+      .style('stroke', 'white');
+
     svg.on('mousedown', function(d) {
       // some new data
       scope.data = d3.range(4).map(function(d){ return Math.random(); });
       // yo angular! we made a change to the scope
       scope.$apply();
     });
-    
-    // add the arcs
-    var arcs = svg.selectAll('path').data(pie(scope.data))
-      .enter().append('path')
-      .attr('fill', function(d, i) { return color(i); })
-      .style('stroke', 'white');
-    
+
     scope.$watch('data', function(data) {
       // our data changed! update the arc <path>s
       arcs.data(pie(data)).attr('d', arc);

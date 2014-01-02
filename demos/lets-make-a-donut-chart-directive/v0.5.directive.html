@@ -2,53 +2,35 @@
 <html>
 <script src="d3.js"></script>
 <script src="angular.js"></script>
-<style>
-  body{
-    margin: 0;
-  }
-  donut-chart{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
-</style>
 <body ng-app="myApp">
-  <donut-chart data="[82, 62, 10, 32]"></donut-chart>
-
+  <donut-chart></donut-chart>
   <script>
 
 var app = angular.module('myApp', []);
 
 app.directive('donutChart', function() {
-  return {
-    scope: { 'data': '=' },
-    restrict: 'E',
-    link: link
-  };
-
-  function link(scope, element) {
-    // the D3 bits..
+  return { restrict: 'E', link: function(scope, element) {
+    // the D3 bits...
     var color = d3.scale.category10();
-    var el = element[0];
-    var width = el.clientWidth;
-    var height = el.clientHeight;
-    var min = Math.min(width, height);
+    var data = [82, 62, 10, 32];
+    var width = 500;
+    var height = 500;
     var pie = d3.layout.pie().sort(null);
     var arc = d3.svg.arc()
-      .outerRadius(min / 2 * 0.9)
-      .innerRadius(min / 2 * 0.5);
-    var svg = d3.select(el).append('svg')
+      .outerRadius(width / 2 * 0.9)
+      .innerRadius(width / 2 * 0.5);
+    var svg = d3.select(element[0]).append('svg')
       .attr({width: width, height: height})
       .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-    
     // add the <path>s for each arc slice
-    svg.selectAll('path').data(pie(scope.data))
+    svg.selectAll('path').data(pie(data))
       .enter().append('path')
         .style('stroke', 'white')
         .attr('d', arc)
         .attr('fill', function(d, i){ return color(i) });
-  }
+  }};
 });
-
-</script>
+    </script>
+  </body>
+</html>

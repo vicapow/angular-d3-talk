@@ -1,6 +1,4 @@
-<!-- 
-  example of a donut directive. notice we're still only reading the data from the scope and not modifying it.
- -->
+<!-- aka, upating shared data -->
 <!DOCTYPE html>
 <html>
 <script src="d3.js"></script>
@@ -16,8 +14,8 @@
   }
 </style>
 <body ng-app="myApp">
-  <div ng-init="chartData=[82, 82, 10, 32]">
-    <donut-chart data="chartData"></donut-chart>
+  <div ng-init="data=[1, 4, 2, 5]">
+    <donut-chart data="data" ng-repeat="item in [1, 2, 3]"></donut-chart>
   </div>
 
   <script>
@@ -26,6 +24,7 @@ var app = angular.module('myApp', []);
 
 app.directive('donutChart', function() {
 
+  // isolate scope
   return {
     scope: { 'data': '=' },
     restrict: 'E',
@@ -33,10 +32,9 @@ app.directive('donutChart', function() {
   };
 
   function link(scope, element) {
-    // the D3 bits..
+    // d3 bits..
     var color = d3.scale.category10();
     var el = element[0];
-    var data = scope.data;
     var width = el.clientWidth;
     var height = el.clientHeight;
     var min = Math.min(width, height);
@@ -45,25 +43,28 @@ app.directive('donutChart', function() {
       .outerRadius(min / 2 * 0.9)
       .innerRadius(min / 2 * 0.5);
     var svg = d3.select(el).append('svg')
-      .attr({width: width, height: height})
+      .attr('width', width)
+      .attr('height', height)
       .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
     
-    // create the arc <path>s
-    var arcs = svg.selectAll('path').data(pie(data))
+    // add the arcs
+    var arcs = svg.selectAll('path').data(pie(scope.data))
       .enter().append('path')
       .attr('fill', function(d, i) { return color(i); })
-      .style('stroke', 'white')
-      .attr('d', arc);
-
+      .style('stroke', 'white');
 
     svg.on('mousedown', function(d) {
-      // change the data
-      data = d3.range(4).map(function(d){ return Math.random(); });
-      // update the arc <path>s
-      arcs.data(pie(data)).attr('d', arc);
+      // some new data
+      scope.data = d3.range(4).map(function(d){ return Math.random(); });
+      // yo angular! we made a change to the scope
+      scope.$apply();
     });
 
+    scope.$watch('data', function(data) {
+      // our data changed! update the arc <path>s
+      arcs.data(pie(data)).attr('d', arc);
+    });
   }
 });
 

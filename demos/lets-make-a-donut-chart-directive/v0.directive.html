@@ -13,7 +13,9 @@
   }
 </style>
 <body ng-app="myApp">
-  <donut-chart data="[82, 62, 10, 32]"></donut-chart>
+  <div ng-init="data=[82, 62, 10, 32]">
+    <donut-chart></donut-chart>
+  </div>
 
   <script>
 
@@ -21,13 +23,14 @@ var app = angular.module('myApp', []);
 
 app.directive('donutChart', function() {
   return {
-    scope: { 'data': '=' },
     restrict: 'E',
     link: link
   };
 
   function link(scope, element) {
-    // the D3 bits..
+    // the D3 bits.. 
+    // use `scope.data` as our data
+    // and `element[0]` for the the directives containing DOM element
     var color = d3.scale.category10();
     var el = element[0];
     var width = el.clientWidth;

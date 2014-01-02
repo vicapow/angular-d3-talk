@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="d3.js"></script>
+  <style>
+    body{
+      margin: 0;
+      background-image: url('Church_Heart_of_the_Andes.jpg');
+      background-size: 100%, 100%;
+      overflow: hidden;
+    }
+    img{
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <script>
+var w = window.innerWidth, h = window.innerHeight
+  , img_w = 278, img_h = 367
+var angel = d3.select('body').selectAll('img').data(d3.range(10))
+  .enter().append('img').attr('src', 'angel.png')
+    .call(pos)
+    .call(loop)
+
+function loop(el){
+  el.transition()
+    .duration(function(){ return 3000 * Math.random() + 1000 })
+    .call(function(el){
+      var ease = ['elastic', 'cubic', 'linear', 'bounce'][Math.floor(Math.random() * 4)]
+      el.ease(d3.ease(ease))
+    }).call(pos)
+    .each('end', function(){ d3.select(this).call(loop) })
+}
+
+function pos(el){
+  el.style('left', function(){
+    return (Math.random() * w - img_w / 2) + 'px'
+  }).style('top', function(){
+    return (Math.random() * h - img_h / 2) + 'px'
+  })
+}
+
+  </script>
+</body>
+</html>
