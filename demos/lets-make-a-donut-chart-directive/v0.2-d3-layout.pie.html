@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <style>
+      body{
+        background-color: #f0f1eb;
+      }
+      path{
+        stroke-width: 10;
+        stroke: white;
+      }
+    </style>
+  </head>
+  <body>
+    <svg></svg>
+    <script src="d3.js"></script>
+    <script>
+// create the pie layout (which creates the start and end angles of a pie or 
+// donut chart for an array of data items.)
+var pie = d3.layout.pie();
+
+// create a new arc generator. (a thing that takes a pie layout 
+// and produces new arc shaped &lt;path&gt; tags).
+var arc = d3.svg.arc().innerRadius(200).outerRadius(300);
+
+var data = [35, 28, 73];
+
+// go and actually create the arcs, using the pie layout
+d3.select('svg').append('g')
+  .attr('transform', 'translate(300, 300)')
+  .selectAll('path').data(pie(data))
+    .enter().append('path')
+    .attr('d', arc);
+    </script>
+  </body>
+</html>
+
+</body>
+</html>

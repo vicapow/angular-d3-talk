@@ -3,7 +3,7 @@ var app = angular.module('myApp', ['ngRoute']);
 // this should be in a factory and not global but we'll leave it like this to 
 // keep the example simple.
 var data = [
-  { label: 'Amy', value: 10 },
+  { label: 'Sarah', value: 10 },
   { label: 'Victor', value: 20 }
 ];
 
@@ -13,7 +13,7 @@ app.controller('MainCtrl', function($scope, $location){
   $scope.accessor = function(d){ return d.value };
   $scope.done = function(){ $location.path('/'); };
   $scope.add = function(){ 
-    $scope.data.push({ label: 'Wow', value: 100 })
+    $scope.data.push({ label: 'Victor', value: 100 })
   };
   $scope.remove = function(datum){
     $scope.data.splice(this.$index, 1);

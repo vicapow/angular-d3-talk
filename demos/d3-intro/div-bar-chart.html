@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="d3.js"></script>
+</head>
+<style>
+  body, html{
+      width: 100%;
+      height: 100%;
+      margin: 0;
+  }
+  div{
+      display:block;
+      box-sizing: border-box;
+      border: 10px solid white;
+      background-color: green;
+  }
+</style>
+<body>
+<script>
+  
+  // somehow we get data..
+  var data = [20, 50, 80];
+
+  d3.select('body').selectAll('div').data(data)
+    .enter().append('div')
+    .style('width', function(d){ return d + '%' })
+    .style('height', '33.33%');
+
+</script>
+</body>
+</html>

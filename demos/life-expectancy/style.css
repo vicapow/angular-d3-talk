@@ -1,0 +1,58 @@
+body, html{
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  font-family: Helvetica;
+}
+state-heatmap{
+  width: 400px;
+  height: 240px;
+  display: inline-block;
+}
+path {
+  fill: none;
+  stroke-linejoin: round;
+}
+.state {
+  stroke: #333;
+  fill: red;
+}
+.table{
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.row{
+  display: table-row;
+  vertical-align: middle;
+}
+.cell{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.cell:nth-child(1){
+  width: 6%;
+}
+.row:nth-child(1){
+  height: 4%;
+}
+.cell h1{
+  margin: 0;
+  padding: 0;
+}
+.row.header{
+  width: 100%;
+  text-align: center;
+  background-color: blue;
+}
+.column-label{
+  height: 5%;
+}
+.row-label{
+  width: 5%;
+}
+.header{
+  width: 100%;
+  text-align: center;
+}

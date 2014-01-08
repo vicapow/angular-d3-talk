@@ -12,19 +12,24 @@
  *********************************************/
 body {
   background: #f0f1eb;
-  background-color: #f0f1eb; }
+  background-color: #f0f1eb;
+}
 
 .reveal {
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
-  font-size: 36px;
+  font-family: 'Open Sans', sans-serif;
+  /*font-size: 36px;*/
+  font-size: 70px;
   font-weight: normal;
   letter-spacing: -0.02em;
-  color: black; }
+  color: #383d3d;
+}
 
 ::selection {
   color: white;
-  background: #26351c;
-  text-shadow: none; }
+  background: #ff0195;
+  text-shadow: none;
+  weight: 700;
+}
 
 /*********************************************
  * HEADERS
@@ -37,21 +42,45 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #383d3d;
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  /*font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;*/
   line-height: 0.9em;
   letter-spacing: 0.02em;
   text-transform: none;
   text-shadow: none; }
 
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.3em; }
+.reveal h3 { font-size: 1.2em; }
+.reveal h4 { font-size: 1.1em; }
+
+.reveal blockquote{
+  font-size: 0.7em;
+}
+
+.reveal small{
+  font-size: 0.5em;
+}
+.reveal pre{
+  width: 100%;
+  box-shadow: none;
+}
+.reveal pre code{
+  font-size: 0.75em;
+  max-height: 100%;
+}
+
 .reveal h1 {
-  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2); }
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}
 
 /*********************************************
  * LINKS
  *********************************************/
 .reveal a:not(.image) {
-  color: #51483d;
-  text-decoration: none;
+  color: #00276f;
+  text-decoration: underline;
   -webkit-transition: color .15s ease;
   -moz-transition: color .15s ease;
   -ms-transition: color .15s ease;
@@ -59,7 +88,7 @@ body {
   transition: color .15s ease; }
 
 .reveal a:not(.image):hover {
-  color: #8b7c69;
+  color: #00276f;
   text-shadow: none;
   border: none; }
 
@@ -136,3 +165,24 @@ body {
  *********************************************/
 .reveal .slide-number {
   color: #51483d; }
+
+
+table.wikitable{
+  width: 100%;
+  height: 50%;
+  font-size: 20px;
+  text-align: center;
+}
+table.wikitable tr{
+  line-height: 100%;
+}
+table.wikitable th{
+  text-align: center;
+}
+table.wikitable tr td{
+  padding: 10px;
+  margin: 0;
+  line-height: inherit;
+  text-align: center;
+  line-height: 100%;
+}

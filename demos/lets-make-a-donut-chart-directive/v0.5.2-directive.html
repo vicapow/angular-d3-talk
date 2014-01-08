@@ -2,7 +2,9 @@
 <html>
 <script src="d3.js"></script>
 <script src="angular.js"></script>
-<body ng-app="myApp">
+<body ng-app="myApp" ng-init="data=[82, 62, 10, 32]">
+  <donut-chart></donut-chart>
+  <donut-chart></donut-chart>
   <donut-chart></donut-chart>
   <script>
 
@@ -12,7 +14,6 @@ app.directive('donutChart', function() {
   return { restrict: 'E', link: function(scope, element) {
     // the D3 bits...
     var color = d3.scale.category10();
-    var data = [82, 62, 10, 32];
     var width = 500;
     var height = 500;
     var pie = d3.layout.pie().sort(null);
@@ -24,7 +25,7 @@ app.directive('donutChart', function() {
       .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
     // add the <path>s for each arc slice
-    svg.selectAll('path').data(pie(data))
+    svg.selectAll('path').data(pie(scope.data)) // our data
       .enter().append('path')
         .style('stroke', 'white')
         .attr('d', arc)
