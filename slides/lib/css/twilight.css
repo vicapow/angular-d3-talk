@@ -21,7 +21,8 @@ pre .request,
 pre .status,
 pre .clojure .attribute {
   /*color: #E3CEAB;*/
-  color: #CDA869;
+  /*color: #CDA869;*/
+  color: #cda869;
 }
 
 pre .django .template_tag,
@@ -48,7 +49,7 @@ pre .python .exception,
 pre .python .built_in,
 pre .literal,
 pre .tex .special {
-  color: #EFEFAF;
+  color: #cf694d;
 }
 
 pre .diff .chunk,
@@ -78,7 +79,6 @@ pre .ruby .string {
 
 pre .diff .deletion,
 pre .string,
-pre .tag .value,
 pre .preprocessor,
 pre .built_in,
 pre .sql .aggregate,
@@ -86,12 +86,15 @@ pre .javadoc,
 pre .smalltalk .class,
 pre .smalltalk .localvars,
 pre .smalltalk .array,
-pre .css .rules .value,
 pre .attr_selector,
 pre .pseudo,
 pre .apache .cbracket,
 pre .tex .formula {
   color: #8F9D6A;
+}
+
+pre .tag .value, pre .css .rules .value {
+  color: #ca773f;
 }
 
 pre .shebang,

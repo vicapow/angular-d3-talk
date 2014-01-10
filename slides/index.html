@@ -54,9 +54,18 @@
             <small>Created by <a href="http://vctr.me">Victor Powell</a> / <a href="http://twitter.com/vicapow">@vicapow</a></small>
           </p>
           <aside class="notes" data-markdown>
-            + angular
+            + Angular
               - two way data binding
-              - directives (reusable custom html tags)
+              - directives (reusable custom HTML tags)
+            + D3
+              - data vis utility belt
+              - set of common data vis helper functions
+            + steep learning curve
+            + a lot to both
+            + you could write a whole book on just using them together!
+            + In this talk..
+              - We'll get into some of the details on how to create a directive
+              - My hope is that by the end of the talk you'll have an appreciation for what directives are and why you would want to use them particularly for data visualization, as well a good collection of terms to search for in Google to learn more.
           </aside>
         </section>
 
@@ -65,11 +74,16 @@
             # Motivation
             (why you should care)
           </section>
-          <section data-markdown>
-            why you should care about data visualization
+          <section>
+            <div data-markdown>
+              why you should care about data visualization
+            </div>
+            <aside class="notes">
+              + for those in the room with less of an appreciation for data visualization.
+            </aside>
           </section>
           <section>
-<table class="wikitable" border="1">
+<table class="wikitable" border="1" style="font-size: 0.3em">
 <caption>Anscombe's quartet</caption>
 <tr>
 <th colspan="2">I</th>
@@ -200,8 +214,8 @@
 </table>
           </section>
           <section>
-<table class="wikitable">
-  <caption>Same summary statistics</caption>
+<table class="wikitable" style="font-size: 0.6em">
+  <caption>Summary statistics</caption>
   <tr>
     <td>mean of x</td>
     <td>9</td>
@@ -229,14 +243,12 @@
 </table>
           </section>
           <section>
-            <div>
-              <a href="http://en.wikipedia.org/wiki/Anscombe's_quartet">
-                <img src="img/anscombes_quartet.svg">
-              </a>
+            <div data-markdown>
+              [![](img/anscombes_quartet.svg)](http://en.wikipedia.org/wiki/Anscombe's_quartet)
             </div>
             <aside class="notes">
               + identical simple statistical properties
-              + anscombe's
+              + anscombe's quartet
               + same 5 summary statistics
                 - mean of x and y
                 - variance of x and y
@@ -263,7 +275,9 @@
           </section>
           <section>
             <div data-markdown>
-              swapping out different charts
+              conditional templates
+              
+              (that "just work")
             </div>
           </section>
           <section>
@@ -281,6 +295,23 @@
           </section>
           <section>
             <div data-markdown>
+              # Small multiples
+
+              (via `ng-repeat`)
+            </div>
+            <aside class="notes" data-markdown>
+              + data visualization tool
+              + Edward Tufte
+            </aside>
+          </section>
+          <section data-markdown>
+            Andrew Gelman's [breakdown of support for school vouchers](http://andrewgelman.com/2009/07/15/hard_sell_for_b/)
+          </section>
+          <section data-markdown>
+            [Life expectancy by sex, race, and state](../demos/life-expectancy/index.html)
+          </section>
+          <section>
+            <div data-markdown>
               ````html
                 &lt;donut-chart ng-repeat=&quot;chart in charts&quot;&gt;&lt;/donut-chart&gt;
               ````
@@ -294,19 +325,17 @@
             </div>
           </section>
           <section>
-            <div data-markdown>
-              ### small multiples
+            <div style="font-size: 0.9em" data-markdown>
+              ````html
+                &lt;whatever-chart ng-repeat=&quot;chart in charts&quot;&gt;&lt;/whatever-chart&gt;
+              ````
             </div>
-            <aside class="notes" data-markdown>
-              + data visualization tool
-              + Edward Tufte
-            </aside>
           </section>
-          <section data-markdown>
-            Andrew Gelman's [breakdown of support for school vouchers](http://andrewgelman.com/2009/07/15/hard_sell_for_b/)
-          </section>
-          <section data-markdown>
-            [Life expectancy by sex, race, and state](../demos/life-expectancy/index.html)
+          <section>
+            <div data-markdown>
+              # Data binding
+              [demo](../demos/lets-make-a-donut-chart-directive/v8-enter-and-exit.html)
+            </div>
           </section>
         </section>
 
@@ -563,13 +592,16 @@
             # Directives
           </section>
           <section data-markdown>
+            roll your own html tags
+          </section>
+          <section data-markdown>
             input fields are essentially directives
           </section>
           <section>
               <input type="range" min="1" max="1000" value="0" style="width:100%">
               <div data-markdown>
                 ````html
-                &lt;input type=&quot;range&quot; min=&quot;1&quot; max=&quot;100&quot; value=&quot;0&quot; &gt;
+                &lt;input type=&quot;range&quot; min=&quot;1&quot; max=&quot;100&quot; value=&quot;0&quot;&gt;
                 ````
               </div>
               <input type="date" value="1989-01-23">
@@ -633,22 +665,22 @@
             <div style="font-size: 0.8em" data-markdown>
               The D3 bits
               ````javascript
-                var width = 500, height = 500;
-                var color = d3.scale.category10();
-                var pie = d3.layout.pie().sort(null);
-                var arc = d3.svg.arc()
-                  .outerRadius(width / 2 * 0.9)
-                  .innerRadius(width / 2 * 0.5);
-                var svg = d3.select(element[0]).append('svg')
-                  .attr({width: width, height: height})
-                  .append('g')
-                    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-                // add the &lt;path&gt;s for each arc slice
-                svg.selectAll('path').data(pie([82, 62, 10, 32]))
-                  .enter().append('path')
-                    .style('stroke', 'white')
-                    .attr('d', arc)
-                    .attr('fill', function(d, i){ return color(i) });
+              var width = 500, height = 500;
+              var color = d3.scale.category10();
+              var pie = d3.layout.pie().sort(null);
+              var arc = d3.svg.arc()
+                .outerRadius(width / 2 * 0.9)
+                .innerRadius(width / 2 * 0.5);
+              var svg = d3.select(element[0]).append('svg')
+                .attr({width: width, height: height})
+                .append('g')
+                  .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+              // add the &lt;path&gt;s for each arc slice
+              svg.selectAll('path').data(pie([82, 62, 10, 32]))
+                .enter().append('path')
+                  .style('stroke', 'white')
+                  .attr('d', arc)
+                  .attr('fill', function(d, i){ return color(i) });
               ````
             </div>
             <aside class="notes">
@@ -856,6 +888,9 @@
             <div data-markdown>
               `$watch` for changes
             </div>
+            <aside class="notes">
+              + pretty strait forward
+            </aside>
           </section>
           <section>
             <div data-markdown>
@@ -945,10 +980,9 @@
               ````javascript
                 svg.on('mousedown', function(d) {
                   scope.$apply(function(){
-                    // some new data
+                    // now inside angular world. safely update the data
                     scope.data = d3.range(4).map(Math.random);
                   });
-                  // yo angular! we might have changed the scope
                 });
 
                 scope.$watch('data', function(data) {
@@ -963,7 +997,7 @@
             sweet
           </section>
           <section data-markdown>
-            rrr.. wait a sec.. now ng-repeats don't work...
+            rrr.. wait a sec.. now ng-repeat don't work...
           </section>
           <section>
             <pre><code class="html">
@@ -1083,6 +1117,13 @@
             # Separating out behavior
           </section>
           <section>
+            <div style="font-size: 0.8em" data-markdown>
+              ````html
+                &lt;donut-chart data=&quot;chartData&quot; on-click=&quot;doSomething()&quot;&gt;&lt;/donut-chart&gt;
+              ````
+            </div>
+          </section>
+          <section>
             <div data-markdown>
               ````javascript
                 scope: { 'data': '=', 'onClick': '&' }
@@ -1116,20 +1157,125 @@
         <section>
           <section>
             <div data-markdown>
-              # Demos
+              # Best practices
             </div>
           </section>
           <section>
             <div data-markdown>
-              # Mortality by sex, race, and state
-              [demo]()
+              keep data / behavior (click handlers) out of the directive
+            </div>
+            <small>(pass these in through the scope)</small>
+            <aside class="notes">
+              + the controller should be responsible for changing the data
+              + or responding to events fired off of the directive
+              + should only transform the data superficially, via copying the original data, like with d3.layout.pie()
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ````html
+                &lt;donut-chart on-click=&quot;chartClicked()&quot;&gt;&lt;/donut-chart&gt;
+              ````
             </div>
           </section>
-        </section>
-        <section>
-          <div data-markdown>
-            # Best Practices
-          </div>
+          <section>
+            <div data-markdown>
+              ````javascript
+                svg.on('mousedown', function(d) {
+                  scope.$apply(function(){
+                    if(scope.onClick) scope.onClick();
+                  });
+                });
+              ````
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              pass accessor functions through the scope to the directive
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+              app.controller('MainCtrl', function($scope){
+                $scope.myAccessor = function(d){ return d.value };
+                $scope.myData = [
+                  { value: 82 },
+                  { value: 12 },
+                  { value: 42 },
+                  { value: 63 }
+                ];
+              });
+              ````
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              ````html
+              &lt;div ng-controller=&quot;MainCtrl&quot;&gt;
+                &lt;bar-chart accessor=&quot;myAccessor&quot; data=&quot;myData&quot;&gt;&lt;/bar-chart&gt;
+              &lt;/div&gt;
+              ````
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              make your directives responsive by watching `clientWidth` and `clientHeight`
+              
+              [demo](../demos/responsive/index.html)
+            </div>
+            <aside class="notes">
+              + POJS objects FTW
+            </aside>
+          </section>
+          <section data-markdown>
+            ````javascript
+              scope.$watch(function(){
+                return el.clientWidth * el.clientHeight
+              }, function(){
+                width = el.clientWidth;
+                height = el.clientHeight;
+                resize();
+              });
+            ````
+          </section>
+          <section data-markdown>
+            ````css
+              bar-chart{
+                width: 100%;
+                height: 100%;
+                display: block;
+                overflow: hidden;
+              }
+            ````
+          </section>
+          <section>
+            <div data-markdown>
+              load data from services
+            </div>
+            <aside class="notes" data-markdown>
+              + not from controllers
+              + and especially not from directives
+              + keeps things clean and separated
+              + easily swap out a csv file for a JSON api, etc...
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ````javascript
+                app.controller('MainCtrl', function($pricingData){
+                  $pricingData.getDay('2014-01-23', function(data){
+                    scope.data = data;
+                  });
+                });
+              ````
+            </div>
+            <aside class="notes" data-markdown>
+              + the controller shouldn't "care" how you get the data.
+              + makes it easy to change how you're getting the data.
+              + also makes it easy to test your controller
+            </aside>
+          </section>
         </section>
         <section>
           <section data-markdown>

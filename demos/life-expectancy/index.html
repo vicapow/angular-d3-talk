@@ -17,7 +17,7 @@
       </div>
     </div>
     <div ng-repeat="sex in sexes" class="row">
-      <div class="cell row-label"><h3>{{row.name}}</h3></div>
+      <div class="cell row-label"><h3>{{sex.name}}</h3></div>
       <div ng-repeat="column in sex.totals" class="cell">
         <state-heatmap data="columns[column].data" geometry="us" extent="extent"></state-heatmap>
       </div>
@@ -58,7 +58,6 @@ app.directive('stateHeatmap', function(){
           .enter().append('path')
           .attr('class', function(d, i){
             var state = d.properties.state
-            // return 'state'
             return 'state ' + state.toLowerCase().split(' ').join('-')
           })
           .attr('d', path)

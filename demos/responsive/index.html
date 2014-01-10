@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <style>
+      body, html{ 
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      bar-chart{
+        width: 100%;
+        height: 100%;
+        display: block;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+      bar-chart .bar{
+        fill: steelblue;
+        stroke: white;
+      }
+    </style>
+  </head>
+  <body ng-app="myApp" ng-controller="MainCtrl">
+    <bar-chart data="chart" ng-style="{ height: 100 / charts.length + '%' }" ng-repeat="chart in charts"></bar-chart>
+  </body>
+    <script src="d3.js"></script>
+    <script src="angular.js"></script>
+    <script>
+
+var app = angular.module('myApp', []);
+
+app.controller('MainCtrl', function($scope, $window, $interval){
+  // some random chart data
+  var data = [];
+  $scope.charts = wrap(data);
+
+  // wait for window resizes
+  angular.element($window).on('resize', $scope.$apply.bind($scope));
+
+  // periodically add more data
+  var val = 5;
+  $interval(function(){
+    val = val + Math.random() - 0.5
+    if(val < 0) val = 0
+    data.push(val);
+    if(data.length > 200) data.shift();
+    $scope.charts = wrap(data);
+  }, 30);
+
+  // wrap around values
+  function wrap(data){
+    data = data.slice(0);
+    var wrapAt = 50;
+    var wrapped = [];
+    while(data.length > 0) wrapped.push(data.splice(0, wrapAt));
+    return wrapped;
+  }
+
+});
+    </script>
+    <script src="bar-chart.directive.js"></script>
+  </body>
+</html>
