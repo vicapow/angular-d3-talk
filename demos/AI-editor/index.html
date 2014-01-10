@@ -1,40 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title></title>
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>AI Editor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <style>
-      body{
-        margin: auto;
-      }
-      .axis .domain{
-        fill: none;
-        stroke-width: 1;
-        stroke: black;
-      }
-      .axis text{
-        font-size: 10px ;
-      }
-      .panel{
-        width: 900px;
-        margin: auto;
-      }
-      .player{
-        display: block;
-        clear: both;
-      }
-      .player .fields{
-        float: left;
-      }
-      .player radar-chart{
-        float: right;
-      }
-    </style>
-    <link href="css/bootstrap.css" rel="stylesheet" >
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
   </head>
   <body ng-app="myApp" ng-controller="MainCtrl">
-    <div class="container">
+      <div class="container">
+        <h1><b>AI Character Creator</b></h1>
       <div class="row">
         <div class="col-lg-12">
           <br>
@@ -42,69 +16,73 @@
           <button class="btn btn-primary pull-right clearfix" ng-click="addAttribute()"><span class="glyphicon glyphicon-plus"></span> add</button>
           <br>
           <br>
-          <table class="table table-striped">
-            <tr class="attribute" ng-repeat="attribute in attributes">
-              <td>
-                <label>name</label>
-                <input type="text" ng-model="attribute.name">
-              </td>
-              <td>
-                <label>min</label>
-                <input type="number" ng-model="attribute.min">
-              </td>
-              <td>
-                <label>max</label>
-                <input type="number" ng-model="attribute.max">
-              </td>
-              <td>
-                <label>default</label>
-                <input type="number" ng-model="attribute.value">
-              </td>
-              <td>
-                <button class="btn btn-danger pull-right clearfix" ng-click="removeAttribute()"><span class="glyphicon glyphicon-minus"></span></button>
-              </td>
-            </tr>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <tr class="attribute" ng-repeat="attribute in attributes">
+                <td>
+                  <label>name</label>
+                  <input type="text" ng-model="attribute.name">
+                </td>
+                <td>
+                  <label>min</label>
+                  <input type="number" ng-model="attribute.min">
+                </td>
+                <td>
+                  <label>max</label>
+                  <input type="number" ng-model="attribute.max">
+                </td>
+                <td>
+                  <label>default</label>
+                  <input type="number" ng-model="attribute.value">
+                </td>
+                <td>
+                  <button class="btn btn-danger pull-right clearfix" ng-click="removeAttribute()"><span class="glyphicon glyphicon-minus"></span></button>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div> <!-- end col -->
       </div> <!-- end row -->
       <div class="row">
         <div class="col-lg-12">
-          <h2>AI Characters</h2>
+          <h2>AI Character Types</h2>
           <button class="btn btn-primary pull-right clearfix" ng-click="addPlayer()"><span class="glyphicon glyphicon-plus"></span> add</button>
           <br>
           <br>
           <div class="row player" ng-repeat="player in players">
             <hr>
-            <div class="row">
-              <div class="col-lg-12">
-                <h3 style="display:inline">{{player.name}}</h3>
-                <input class="btn btn-danger pull-right" type="button" ng-click="removePlayer()" value="-">
-                <div class="clearfix"></div>
+            <div class="col-lg-12">
+              <input class="btn btn-danger pull-right" type="button" ng-click="removePlayer()" value="-">
+              <h1>{{player.name}}</h1>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-horizontal" role="form">
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">name</label>
+                      <div class="col-sm-6 col-md-6 ">
+                        <input class="form-control" type="text" ng-model="player.name">
+                      </div>
+                    </div>
+                    <div class="form-group" ng-repeat="attribute in player.attributes">
+                      <label class="col-sm-3 control-label">{{attribute.name}}</label>
+                      <div class="col-sm-6 col-md-6">
+                        <input class="form-control" type="number" ng-model="attribute.value" min="{{attribute.min}}" ng-attr-max="{{attribute.max}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <radar-chart data="player.attributes"></radar-chart>
+                </div>
               </div>
             </div>
-            <div class="col-lg-6">
-              <form class="form-horizontal" role="form">
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">player name</label>
-                  <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="player.name">
-                  </div>
-                </div>
-                <div class="form-group" ng-repeat="attribute in player.attributes">
-                  <label class="col-sm-3 control-label">{{attribute.name}}</label>
-                  <div class="col-sm-3">
-                    <input class="form-control" type="number" ng-model="attribute.value" min="{{attribute.min}}" ng-attr-max="{{attribute.max}}">
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="col-lg-6">
-              <radar-chart data="player.attributes"></radar-chart>
-            </div>
           </div>
+          <button class="btn btn-primary pull-right clearfix" ng-click="addPlayer()"><span class="glyphicon glyphicon-plus"></span> add</button>
         </div> <!-- end col -->
       </div> <!-- end row -->
     </div>  <!-- end container -->
+    <br>
+    <br>
     <script src="d3.js"></script>
     <script src="angular.js"></script>
     <script src="app.js"></script>

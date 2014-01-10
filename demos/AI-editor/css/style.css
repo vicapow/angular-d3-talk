@@ -1,0 +1,54 @@
+body{
+  margin: auto;
+}
+*{
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.axis .domain{
+  fill: none;
+  stroke-width: 1;
+  stroke: #333;
+}
+.axis text{
+  font-size: 10px ;
+}
+.panel{
+  width: 900px;
+  margin: auto;
+}
+.player{
+  display: block;
+  clear: both;
+}
+.player .fields{
+  float: left;
+}
+.player radar-chart{
+  width: 100%;
+  height: 400px;
+  /*background-color: blue;*/
+  overflow: hidden;
+  display: block;
+}
+
+.player radar-chart .nob{
+  display: none;
+  fill: #eee;
+  stroke: #666;
+}
+.player radar-chart:hover .nob{
+  display: inherit;
+}
+
+.player radar-chart .label{
+  font-size: 1.2em;
+}
+
+.player radar-chart .tick text{
+  font-size: 1.2em;
+}
