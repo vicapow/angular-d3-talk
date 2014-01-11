@@ -47,39 +47,115 @@
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
-          <h1>Visualizing Data with AngularJS</h1>
+          <h1>Visualizing data with Angular and D3</h1>
           <h3></h3>
           <br>
           <p>
             <small>Created by <a href="http://vctr.me">Victor Powell</a> / <a href="http://twitter.com/vicapow">@vicapow</a></small>
           </p>
           <aside class="notes" data-markdown>
-            + Angular
-              - two way data binding
-              - directives (reusable custom HTML tags)
-            + D3
-              - data vis utility belt
-              - set of common data vis helper functions
-            + steep learning curve
-            + a lot to both
-            + you could write a whole book on just using them together!
-            + In this talk..
-              - We'll get into some of the details on how to create a directive
-              - My hope is that by the end of the talk you'll have an appreciation for what directives are and why you would want to use them particularly for data visualization, as well a good collection of terms to search for in Google to learn more.
+            + as obvious by the title behind, this is a talk on using angular with d3.
+            + quick note: all the slides and demos will be posted online
           </aside>
         </section>
-
         <section>
-          <section data-markdown>
-            # Motivation
-            (why you should care)
+          <section>
+            <div data-markdown>
+              # About me
+            </div>
+            <aside class="notes" data-markdown>
+              + why you should listen
+            </aside>
           </section>
           <section>
             <div data-markdown>
-              why you should care about data visualization
+              # I visualize data
             </div>
-            <aside class="notes">
-              + for those in the room with less of an appreciation for data visualization.
+            <aside class="notes" data-markdown>
+              + as a freelance developer
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              [![](img/monsoonco-logo-black-bg.png)](http://www.monsoonco.com/‎)
+            </div>
+            <aside class="notes" data-markdown>
+              + most recently helped Monsoon built this dashboard for HP
+            </aside>
+          </section>
+          <section>
+            <div  data-markdown>
+              ![](img/hp-spog-1.png)
+            </div>
+            <aside class="notes" data-markdown>
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              # I teach
+            </div>
+            <aside class="notes" data-markdown>
+              + at a Hacker School in San Francisco called Hack Reactor
+            </aside>
+          </section>
+          <section data-markdown>
+            ![](img/hackreactor-logo-white-bg.png)
+          </section>
+          <section data-markdown>
+            # I like to explain things
+          </section>
+          <section data-markdown>
+            ![](img/central-limit-theorem.png)
+          </section>
+          <section data-markdown>
+            ![](img/monty-hall.png)
+          </section>
+          <section data-markdown>
+            ![](img/simpsons-paradox.png)
+          </section>
+          <section data-markdown>
+            # I'm writing a book
+          </section>
+          <section data-markdown>
+            ![](img/d3-on-angular.png)
+          </section>
+          <section>
+            <h2>Have data visualization work?</h2>
+            <aside>lets talk: <a href="me@vctr.me">me@vctr.me</a></aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ![](img/hello-kitty.png)
+
+              ok.. no more ads
+            </div>
+            <aside class="notes" data-markdown>
+            </aside>
+          </section>
+        </section>
+
+        <!-- overview -->
+
+        <section>
+          <section>
+            <div data-markdown>
+              `Why` and `how` you should use angular with D3 for doing data visualization.
+            </div>
+            <aside class="notes" data-markdown>
+            </aside>
+          </section>
+        </section>
+
+        <!-- the "WHY" -->
+
+        <section>
+          <section>
+            <div data-markdown>
+              Why you should care about data visualization
+            </div>
+            <aside class="notes" data-markdown>
+              + for those in the room not as familiar with data visualization
+              + briefly touch on why data visualization matters with one of my favorite examples.
             </aside>
           </section>
           <section>
@@ -214,6 +290,7 @@
 </table>
           </section>
           <section>
+            <div>
 <table class="wikitable" style="font-size: 0.6em">
   <caption>Summary statistics</caption>
   <tr>
@@ -240,14 +317,10 @@
     <td>linear regression</td>
     <td>y = 3.0 + 0.5 * x</td>
   </tr>
-</table>
-          </section>
-          <section>
-            <div data-markdown>
-              [![](img/anscombes_quartet.svg)](http://en.wikipedia.org/wiki/Anscombe's_quartet)
+</table>  
             </div>
-            <aside class="notes">
-              + identical simple statistical properties
+            <aside class="notes" data-markdown>
+              + identical summary statistics
               + anscombe's quartet
               + same 5 summary statistics
                 - mean of x and y
@@ -255,30 +328,74 @@
                 - correlation x <-> y
             </aside>
           </section>
-          <section data-markdown>
-            why you should care about using angular for data visualization
+          <section>
+            <div data-markdown>
+              [![](img/anscombes_quartet.svg)](http://en.wikipedia.org/wiki/Anscombe's_quartet)
+            </div>
           </section>
+        </section>
+        <section>
           <section data-markdown>
-            ### Directives
+            Why you should use Angular for data visualization
           </section>
           <section>
             <div data-markdown>
-              what if...
+              # Directives
+            </div>
+            <aside class="notes" data-markdown>
+              + many reasons to use Angular for data vis, but #1 is directives
+              + essentially custom HTML tags
+              + forces you're visualizations to stay module
+              + allows you to think about them as just components instead of chunks of code.
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              input fields "are" directives
+            </div>
+            <aside class="notes" data-markdown>
+              + you can think of most input fields as directives that the browser provides.
+              + self contained components we can "plug into"
+            </aside>
+          </section>
+          <section>
+              <input type="range" min="1" max="1000" value="0" style="width:100%">
+              <div data-markdown>
+                ````html
+                &lt;input type=&quot;range&quot; min=&quot;1&quot; max=&quot;100&quot; value=&quot;0&quot;&gt;
+                ````
+              </div>
+              <input type="date" value="1989-01-23">
+              <div data-markdown>
+                ````html
+                &lt;input type=&quot;date&quot; value=&quot;1989-01-23&quot;&gt;
+                ````
+              </div>
+          </section>
+          <section>
+            <div style="font-size:1.5em" data-markdown>
               ````html
                 &lt;donut-chart&gt;&lt;/donut-chart&gt;
               ````
             </div>
             <aside class="notes">
-              + what this was possible?
-              + possible via directives
+              + would it be great if we could just do this?
+              + directives make this possible
             </aside>
           </section>
+          <section data-markdown>
+            ![](img/donut-chart-1.png)
+          </section>
+
           <section>
             <div data-markdown>
               conditional templates
-              
-              (that "just work")
+
+              (via `ng-switch`)
             </div>
+            <aside class="notes">
+              + if we make our data visualizations directives, we can take advantage of angulars other features, like conditional templates via `ng-switch`
+            </aside>
           </section>
           <section>
             <div data-markdown>
@@ -292,6 +409,10 @@
                   &lt;/div&gt;
                 &lt;/div&gt;
               ````
+            </div>
+            <aside class="notes" data-markdown>
+              + made possible by directives
+            </aside>
           </section>
           <section>
             <div data-markdown>
@@ -300,15 +421,45 @@
               (via `ng-repeat`)
             </div>
             <aside class="notes" data-markdown>
-              + data visualization tool
-              + Edward Tufte
+              + another angular feature of particular interest of data visualizer is ng-repeat for creating small multiples
+
+              Small Multiples
+                + powerful visualization tool
+                + Popularized by Edward Tufte
+                + facilitates comparisons of change across multiple charts side by side
             </aside>
           </section>
-          <section data-markdown>
-            Andrew Gelman's [breakdown of support for school vouchers](http://andrewgelman.com/2009/07/15/hard_sell_for_b/)
+          <section>
+            <div data-markdown>
+              ![](img/the-horse-in-motion.jpg)
+            </div>
+            <aside class="notes" data-markdown>
+              The classic is Eadweard Muybridge's "A horse in motion"
+              + you might wonder why we can't just animate the horse. We have computers, after all...
+            </aside>
           </section>
-          <section data-markdown>
-            [Life expectancy by sex, race, and state](../demos/life-expectancy/index.html)
+          <section>
+            <div data-markdown>
+              ![](img/the-horse-in-motion.gif)
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
+              [![](img/andrew-gelman-school-vouchers-map.png)](http://andrewgelman.com/2009/07/15/hard_sell_for_b/)
+            </div>
+            <aside class="notes" data-markdown>
+              + but take this example which would be impossible with a simple animation by Anrew Gelman.
+              + Show's support for school vouchers by race, income, latitude, longitude.
+              + 4 dimensions in the map alone (state, latitude, longitude, voucher support)
+              + 6 when you add the rows and columns offered by small multiples
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ![](img/small-multiples-with-ng-repeat.png)
+            </div>
+            <aside class="notes" data-markdown>
+            </aside>
           </section>
           <section>
             <div data-markdown>
@@ -316,94 +467,83 @@
                 &lt;donut-chart ng-repeat=&quot;chart in charts&quot;&gt;&lt;/donut-chart&gt;
               ````
             </div>
+            <aside class="notes" data-markdown>
+              + also made possible by directives
+            </aside>
           </section>
           <section>
             <div data-markdown>
               ````html
-                &lt;bar-chart ng-repeat=&quot;chart in charts&quot;&gt;&lt;/bar-chart&gt;
+                &lt;div ng-repeat=&quot;races in incomes&quot;&gt;
+                  &lt;map ng-repeat=&quot;race in races&quot;&gt;&lt;/map&gt;
+                &lt;/div&gt;
               ````
-            </div>
-          </section>
-          <section>
-            <div style="font-size: 0.9em" data-markdown>
-              ````html
-                &lt;whatever-chart ng-repeat=&quot;chart in charts&quot;&gt;&lt;/whatever-chart&gt;
-              ````
-            </div>
-          </section>
-          <section>
-            <div data-markdown>
-              # Data binding
-              [demo](../demos/lets-make-a-donut-chart-directive/v8-enter-and-exit.html)
-            </div>
-          </section>
-        </section>
-
-        <!-- about me -->
-
-        <section>
-          <section data-markdown>
-            # About me
-            (why you should listen)
-          </section>
-          <section data-markdown>
-            # I build dashboards
-          </section>
-          <section data-markdown>
-            ![](img/monsoonco-logo-black-bg.png)
-          </section>
-          <section data-markdown>
-            ![](img/hp-spog-1.png)
-          </section>
-          <section data-markdown>
-            # I teach
-          </section>
-          <section data-markdown>
-            ![](img/hackreactor-logo-white-bg.png)
-          </section>
-          <section data-markdown>
-            # I like to explain things
-          </section>
-          <section data-markdown>
-            ![](img/central-limit-theorem.png)
-          </section>
-          <section data-markdown>
-            ![](img/monty-hall.png)
-          </section>
-          <section data-markdown>
-            ![](img/simpsons-paradox.png)
-          </section>
-          <section data-markdown>
-            # I'm writing a book
-          </section>
-          <section data-markdown>
-            ![](img/d3-on-angular.png)
-          </section>
-          <section>
-            <h2>Have datavis work?</h2>
-            <aside>lets talk: <a href="me@vctr.me">me@vctr.me</a></aside>
-          </section>
-          <section>
-            <div data-markdown>
-              ![](img/hello-kitty.png)
-
-              ok.. no more ads
             </div>
             <aside class="notes" data-markdown>
-              + I don't like ads...
-              + ad-blocker.png -> hello-kitty.png
+              + ng-repeat inside of ng-repeat
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              Yo dawge...
+            </div>
+            <aside class="notes">
+              + cause no one's probably ever made that joke at a programming meetup before
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ## Responsiveness
+              
+              [demo](demos/responsive/index.html)
+            </div>
+            <aside class="notes" data-markdown>
+              + because of Angular's digest cycle
+              + in combination with some CSS tricks and $watch
+              + by watching the containing tags width and height
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              # Interactivity across visualizations
+
+              [Demo 1](demos/AI-editor/index.html) [Demo 2](http://vudlab.com/simpsons/)
+            </div>
+            <aside class="notes" data-markdown>
+              + because of Angular's digest loop
+
+              ## Demo 1: Non-player character creator
+
+                + A hypothetical application
+                + useful if you're creating non-playable characters in a video game with a fair distribution of skill levels.
+
+              ## Demo 2: Simpson's Paradox
+                + Paradoxical situation of confounded statistics caused by a 3rd lucking variable.
             </aside>
           </section>
         </section>
+
+        <!-- the "HOW" -->
 
         <section>
           <section>
             <div data-markdown>
               # Lets make a donut chart directive
             </div>
+            <aside class="notes">
+              now that you understand some of the motivations for why you would want to use angular with d3, lets talk about how.
+            </aside>
           </section>
           <section>
-            <a target="_blank" href="../demos/lets-make-a-donut-chart-directive/v9-using-a-controller-and-seperating-out-business-logic.html">demo</a>
+            <div data-markdown>
+              ## What we'll build
+              [demo](demos/lets-make-a-donut-chart-directive/v9-using-a-controller-and-seperating-out-business-logic.html)
+            </div>
+            <aside class="notes" data-markdown>
+              + what the final version will look like
+              + just a very simple demo that demonstrates most of the key concepts.
+              + (Live code modifying the directive)
+            </aside>
           </section>
         </section>
 
@@ -480,7 +620,7 @@
             </aside>
           </section>
           <section data-markdown>
-            [demo](../demos/d3-intro/div-bar-chart.html)
+            [demo](demos/d3-intro/div-bar-chart.html)
           </section>
           <section>
             <div data-markdown>
@@ -545,7 +685,7 @@
               ````
           </section>
           <section data-markdown>
-            [demo](../demos/lets-make-a-donut-chart-directive/v0.1-d3-layout.pie.html)
+            [demo](demos/lets-make-a-donut-chart-directive/v0.1-d3-layout.pie.html)
           </section>
           <section>
             <div data-markdown>
@@ -560,7 +700,7 @@
             </div>
           </section>
           <section data-markdown>
-            [demo](../demos/lets-make-a-donut-chart-directive/v0.2-d3-layout.pie.html)
+            [demo](demos/lets-make-a-donut-chart-directive/v0.2-d3-layout.pie.html)
           </section>
           <section data-markdown>
             # Additional Resources
@@ -586,30 +726,9 @@
             ````
           </section>
         </section>
-
         <section>
           <section data-markdown>
             # Directives
-          </section>
-          <section data-markdown>
-            roll your own html tags
-          </section>
-          <section data-markdown>
-            input fields are essentially directives
-          </section>
-          <section>
-              <input type="range" min="1" max="1000" value="0" style="width:100%">
-              <div data-markdown>
-                ````html
-                &lt;input type=&quot;range&quot; min=&quot;1&quot; max=&quot;100&quot; value=&quot;0&quot;&gt;
-                ````
-              </div>
-              <input type="date" value="1989-01-23">
-              <div data-markdown>
-                ````html
-                &lt;input type=&quot;date&quot; value=&quot;1989-01-23&quot;&gt;
-                ````
-              </div>
           </section>
           <section>
             <div data-markdown>
@@ -696,7 +815,7 @@
   &lt;/body&gt;
               </code></pre>
               <div data-markdown>
-                [demo](../demos/lets-make-a-donut-chart-directive/v0.5-directive.html)
+                [demo](demos/lets-make-a-donut-chart-directive/v0.5-directive.html)
               </div>
           </section>
          <section>
@@ -708,7 +827,7 @@
   &lt;/body&gt;
               </code></pre>
               <div data-markdown>
-                [demo](/demos/lets-make-a-donut-chart-directive/v0.5.1-directive.html)
+                [demo](demos/lets-make-a-donut-chart-directive/v0.5.1-directive.html)
               </div>
           </section>
           <section>
@@ -766,7 +885,7 @@
                   &lt;donut-chart&gt;&lt;/donut-chart&gt;
                 &lt;/body&gt;
               ````
-              [demo](../demos/lets-make-a-donut-chart-directive/v0.5.2-directive.html)
+              [demo](demos/lets-make-a-donut-chart-directive/v0.5.2-directive.html)
             </div>
             <aside class="notes" data-markdown>
               + disadvantage
@@ -826,7 +945,7 @@
                   &lt;donut-chart data="[10, 10, 20]"&gt;&lt;/donut-chart&gt;
                 &lt;/body&gt;
               ````
-              [demo](../demos/lets-make-a-donut-chart-directive/v1.1-directive.html)
+              [demo](demos/lets-make-a-donut-chart-directive/v1.1-directive.html)
             </div>
           </section>
           <section data-markdown>
@@ -847,7 +966,7 @@
     &lt;donut-chart data="myData"&gt;&lt;/donut-chart&gt;
   &lt;/body&gt;
               </code></pre>
-              <a href="../demos/lets-make-a-donut-chart-directive/v2-sharing-data.html">demo</a>
+              <a href="demos/lets-make-a-donut-chart-directive/v2-sharing-data.html">demo</a>
               <aside class="notes" data-markdown>
                 + share data
               </aside>
@@ -863,7 +982,7 @@
                   &lt;donut-chart data="data" ng-repeat="data in charts"&gt;&lt;/donut-chart&gt;
                 &lt;/body&gt;
               ````
-              [demo](../demos/lets-make-a-donut-chart-directive/v2.1-sharing-data.html)
+              [demo](demos/lets-make-a-donut-chart-directive/v2.1-sharing-data.html)
             </div>
             <aside class="notes" data-markdown>
             </aside>
@@ -902,7 +1021,7 @@
                   arcs.data(pie(data)).attr('d', arc);
                 });
               ````
-              [demo](../demos/lets-make-a-donut-chart-directive/v3-updating-data.html)
+              [demo](demos/lets-make-a-donut-chart-directive/v3-updating-data.html)
             </div>
             <aside class="notes" data-markdown>
               + we'll work from this to illustrate updating data
@@ -919,7 +1038,7 @@
     &lt;/div&gt;
   &lt;/body&gt;
               </code></pre>
-              <a href="../demos/lets-make-a-donut-chart-directive/v3.1-updating-data.html">demo</a>
+              <a href="demos/lets-make-a-donut-chart-directive/v3.1-updating-data.html">demo</a>
               <aside class="notes" data-markdown>
                 + angular never gets to know about our change
               </aside>
@@ -933,18 +1052,6 @@
             </div>
             <aside class="notes" data-markdown>
             </aside>
-          </section>
-          <section data-markdown>
-            ````javascript
-              // the Backbone/Ember way
-              model.set('something', 'someValue');
-            ````
-          </section>
-          <section data-markdown>
-            ````javascript
-              // the Angular way
-              scope.something = 'someValue';
-            ````
           </section>
           <section data-markdown>
             how does it know?!
@@ -990,7 +1097,7 @@
                   arcs.data(pie(data)).attr('d', arc);
                 });
               ````
-              [demo](../demos/lets-make-a-donut-chart-directive/v4-updating-shared-data-with-watch-and-apply.html)
+              [demo](demos/lets-make-a-donut-chart-directive/v4-updating-shared-data-with-watch-and-apply.html)
             </div>
           </section>
           <section data-markdown>
@@ -1008,7 +1115,7 @@
     &lt;/div&gt;
   &lt;/body&gt;
               </code></pre>
-              <a href="../demos/lets-make-a-donut-chart-directive/v4.1-updating-shared-data-with-watch-and-apply.html">demo</a>
+              <a href="demos/lets-make-a-donut-chart-directive/v4.1-updating-shared-data-with-watch-and-apply.html">demo</a>
               <aside class="notes" data-markdown>
               </aside>
           </section>
@@ -1034,7 +1141,7 @@
                   &lt;/div&gt;
                 &lt;/body&gt;
               ````
-              [demo](../demos/lets-make-a-donut-chart-directive/v6-ng-repeat-and-scope-inheritance-part2.html)
+              [demo](demos/lets-make-a-donut-chart-directive/v6-ng-repeat-and-scope-inheritance-part2.html)
             </div>
               <aside class="notes" data-markdown>
                 + prevents the `shared` inherited property on the parent from being overwritten on the child scopes.
@@ -1078,10 +1185,10 @@
             ````
           </section>
           <section data-markdown>
-            [transitioning arc angles demo](../demos/arch-angels/index.html)
+            [transitioning arc angles demo](demos/arch-angels/index.html)
           </section>
           <section data-markdown>
-            whoops... lets try that again. [transitioning arc angles demo](../demos/lets-make-a-donut-chart-directive/v7-animation.html)
+            whoops... lets try that again. [transitioning arc angles demo](demos/lets-make-a-donut-chart-directive/v7-animation.html)
           </section>
 
           <section data-markdown>
@@ -1100,7 +1207,7 @@
               // 3.) or remove any old arcs (if newData.length < oldData.length )
             });
             ````
-            [demo](../demos/lets-make-a-donut-chart-directive/v8-enter-and-exit.html)
+            [demo](demos/lets-make-a-donut-chart-directive/v8-enter-and-exit.html)
           </section>
           <section>
             <div data-markdown>
@@ -1136,7 +1243,7 @@
                   });
                 });
               ````
-              [demo](../demos/lets-make-a-donut-chart-directive/v9-using-a-controller-and-seperating-out-business-logic.html)
+              [demo](demos/lets-make-a-donut-chart-directive/v9-using-a-controller-and-seperating-out-business-logic.html)
             </div>
             <aside class="notes" data-markdown>
               + '&' for binding behaviors
@@ -1146,7 +1253,7 @@
           </section>
           <section>
             <div data-markdown>
-              [a larger demo](../demos/a-donut-chart-editor/index.html)
+              [a larger demo](demos/a-donut-chart-editor/index.html)
             </div>
             <aside class="notes" data-markdown>
               + why should you care?
@@ -1222,7 +1329,7 @@
             <div data-markdown>
               make your directives responsive by watching `clientWidth` and `clientHeight`
               
-              [demo](../demos/responsive/index.html)
+              [demo](demos/responsive/index.html)
             </div>
             <aside class="notes">
               + POJS objects FTW
@@ -1298,7 +1405,7 @@
         progress: true,
         history: true,
         center: true,
-        previewLinks: true,
+        previewLinks: false,
 
         // theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
         theme: 'serif',

@@ -15,6 +15,10 @@ body {
   background-color: #f0f1eb;
 }
 
+.reveal .state-background{
+  background-color: white;
+}
+
 .reveal {
   font-family: 'Open Sans', sans-serif;
   /*font-size: 36px;*/

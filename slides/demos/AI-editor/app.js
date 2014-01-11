@@ -201,3 +201,14 @@ app.directive('radarChart', function(){
     link: link
   }
 })
+
+app.directive('barChart', function(){
+  function link(scope, el, attr){
+    // d3.select(el[0]).append('svg')
+  }
+  return {
+    link: link,
+    scope: { data: '=' },
+    restrict: 'E'
+  }
+})

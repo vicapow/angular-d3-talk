@@ -16,11 +16,19 @@
 <body ng-app="myApp">
   <div ng-controller="MainController">
     <donut-chart data="shared.data" on-click="chartClicked()"></donut-chart>
-    <!-- <donut-chart data="shared.data" on-click="chartClicked()"></donut-chart> -->
   </div>
+</body>
+
+
+
+
+
+
+
+
+
 
   <script>
-
 var app = angular.module('myApp', []);
 
 app.directive('donutChart', function() {
@@ -106,6 +114,7 @@ app.directive('donutChart', function() {
 app.controller('MainController', function($scope){
   // controller "knows" nothing about donut charts
   $scope.shared = { data: [1] };
+  $scope.charts = d3.range(10);
   $scope.chartClicked = function(){
     var n = Math.round(Math.random() * 9) + 1;
     $scope.shared.data = d3.range(n).map(function(d){ return Math.random(); });
