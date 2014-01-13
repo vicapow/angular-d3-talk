@@ -1,130 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title></title>
-  </head>
+  <script src="d3.js"></script>
   <style>
     body, html{
       margin: 0;
       width: 100%;
       height: 100%;
     }
-    donut-chart{
+    .donut-chart{
+      width: 100%;
       height: 100%;
-      display: block;
-      float: left;
+      position: absolute;
     }
   </style>
-  <script src="d3.js"></script>
-  <script src="angular.js"></script>
-  <body ng-app="myApp" ng-controller="ChartCtrl">
-    <div style="position: absolute">
-      <input type="number" ng-model="numCharts">
-      <input type="number" ng-model="numElements">
-    </div>
-    <donut-chart ng-style="{width: 100 / charts.length + '%' }" data="shared.chart" ng-repeat="i in charts"></donut-chart>
+  <body>
+    <div class="donut-chart"></div>
     <script>
 
-var app = angular.module('myApp', [])
+var data = [82 ,32, 63, 42]
+var color = d3.scale.category10()
+var el = d3.select('div').node()
+var width = el.clientWidth
+var height = el.clientHeight
+var min = Math.min(width, height)
+var pie = d3.layout.pie().sort(null)
+var arc = d3.svg.arc()
+  .outerRadius(min / 2 * 0.9)
+  .innerRadius(min / 2 * 0.5)
+var svg = d3.select(el).append('svg')
+  .attr({width: width, height: height})
+  .append('g')
+    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
-app.controller('ChartCtrl', function($scope, $window){
-  $scope.numElements = 10
-  $scope.numCharts = 10
-  $scope.shared = { chart: d3.range($scope.numElements).map(Math.random) }
-  $scope.charts = d3.range($scope.numCharts)
-
-  $scope.$watch('numElements', function(numElements){
-    $scope.shared.chart = d3.range(numElements).map(Math.random)
-  })
-  $scope.$watch('numCharts', function(numCharts){
-    $scope.charts = d3.range(numCharts)
-  })
-  angular.element($window).on('resize', $scope.$apply.bind($scope))
-})
-
-app.directive('donutChart', function(){
-  function link(scope, el, attr){
-    el = el[0]
-    var PI = Math.PI
-    var duration = 200
-    var data = scope.data
-    var color = d3.scale.category10()
-    var width = el.clientWidth
-    var height = el.clientHeight
-    var min = Math.min(width, height)
-    var pie = d3.layout.pie().sort(null)
-    var arc = d3.svg.arc()
-      .outerRadius(min / 2 * 0.9)
-      .innerRadius(min / 2 * 0.5)
-
-    var svg = d3.select(el).append('svg')
-      .attr({width: width, height: height})
-    
-    var g = svg.append('g')
-
-    // add the <path>s for each arc slice
-    var arcs = g.selectAll('path')
-
-    svg.on('mousedown', function(){
-      scope.$apply(function(){
-        scope.data = d3.range(Math.round(Math.random()* 10) + 1).map(Math.random)
-      })
-    })
-
-    function arcTween(a) {
-      // see: http://bl.ocks.org/mbostock/1346410
-      var i = d3.interpolate(this._current, a);
-      this._current = i(0);
-      return function(t) {
-        return arc(i(t));
-      };
-    }
-
-    scope.$watch('data', function(data){
-      arcs = arcs.data(pie(data))
-      arcs.transition()
-        .duration(duration)
-        .attrTween('d', arcTween)
-      
-      arcs.enter()
-        .append('path')
-        .style('stroke', 'white')
-        .attr('fill', function(d, i){ return color(i) })
-        .each(function(d) {
-          this._current = { startAngle: 2 * PI - 0.001, endAngle: 2 * PI }
-        })
-        .transition()
-        .duration(duration)
-        .attrTween('d', arcTween)
-      
-      arcs.exit()
-        .transition()
-        .duration(duration)
-        .each(function(d){ 
-          d.startAngle = 2 * PI - 0.001; d.endAngle = 2 * PI; 
-        })
-        .attrTween('d', arcTween).remove();
-    })
-
-    scope.$watch(function(){
-      return el.clientWidth * el.clientHeight
-    }, function(){
-      width = el.clientWidth
-      height = el.clientHeight
-      min = Math.min(width, height)
-      svg.attr({width: width, height: height})
-      arc.outerRadius(min / 2 * .9).innerRadius( min / 2 * .5)
-      svg.selectAll('path').attr('d', arc)
-      g.attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
-
-    })
-  }
-  return {
-    link: link,
-    restrict: 'E',
-    scope: { data: '=' }
-  }
-})
+// add the <path>s for each arc slice
+svg.selectAll('path').data(pie(data))
+  .enter().append('path')
+    .style('stroke', 'white')
+    .attr('d', arc)
+    .attr('fill', function(d, i){ return color(i) })
 
     </script>
   </body>

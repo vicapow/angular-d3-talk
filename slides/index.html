@@ -54,8 +54,8 @@
             <small>Created by <a href="http://vctr.me">Victor Powell</a> / <a href="http://twitter.com/vicapow">@vicapow</a></small>
           </p>
           <aside class="notes" data-markdown>
-            + as obvious by the title behind, this is a talk on using angular with d3.
-            + quick note: all the slides and demos will be posted online
+            + as made obvious from the slide behind, this is a talk on using angular with D3.
+            + all the slides and demos will be posted online
           </aside>
         </section>
         <section>
@@ -120,8 +120,11 @@
             ![](img/d3-on-angular.png)
           </section>
           <section>
-            <h2>Have data visualization work?</h2>
-            <aside>lets talk: <a href="me@vctr.me">me@vctr.me</a></aside>
+            <h2>Need help understanding your data?</h2>
+            <small>lets talk: <a href="me@vctr.me">me@vctr.me</a></small>
+            <aside class="notes">
+              + so... out last ad,
+            </aside>
           </section>
           <section>
             <div data-markdown>
@@ -130,6 +133,7 @@
               ok.. no more ads
             </div>
             <aside class="notes" data-markdown>
+              + okay, enough ads, lets start getting into the good parts
             </aside>
           </section>
         </section>
@@ -139,9 +143,10 @@
         <section>
           <section>
             <div data-markdown>
-              `Why` and `how` you should use angular with D3 for doing data visualization.
+              __Why__ and __how__ should you use angular with D3 for doing data visualization?
             </div>
             <aside class="notes" data-markdown>
+              + this talk is going to primarily address this question
             </aside>
           </section>
         </section>
@@ -155,7 +160,7 @@
             </div>
             <aside class="notes" data-markdown>
               + for those in the room not as familiar with data visualization
-              + briefly touch on why data visualization matters with one of my favorite examples.
+              + I'll just briefly touch on why data visualization matters with one of my favorite examples.
             </aside>
           </section>
           <section>
@@ -332,11 +337,19 @@
             <div data-markdown>
               [![](img/anscombes_quartet.svg)](http://en.wikipedia.org/wiki/Anscombe's_quartet)
             </div>
+            <aside class="notes" data-markdown>
+              + when we plot them, we see something completely different.
+            </aside>
           </section>
         </section>
         <section>
-          <section data-markdown>
-            Why you should use Angular for data visualization
+          <section>
+            <div data-markdown>
+              Why you should use Angular for data visualization
+            </div>
+            <aside class="notes" data-markdown>
+              + how we'll get into the somewhat more interesting question..
+            </aside>
           </section>
           <section>
             <div data-markdown>
@@ -345,17 +358,17 @@
             <aside class="notes" data-markdown>
               + many reasons to use Angular for data vis, but #1 is directives
               + essentially custom HTML tags
-              + forces you're visualizations to stay module
-              + allows you to think about them as just components instead of chunks of code.
+              + allows our visualizations to stay module
+              + allows us to deal with visualizations as components we can simply plug into our application wherever we like or to reuse them on other projects.
             </aside>
           </section>
           <section>
             <div data-markdown>
-              input fields "are" directives
+              think of `&lt;input&gt;` fields as directives
             </div>
             <aside class="notes" data-markdown>
-              + you can think of most input fields as directives that the browser provides.
-              + self contained components we can "plug into"
+              + components with a lot going on but that expose a minimal interface
+              + browser directives
             </aside>
           </section>
           <section>
@@ -378,13 +391,18 @@
                 &lt;donut-chart&gt;&lt;/donut-chart&gt;
               ````
             </div>
-            <aside class="notes">
-              + would it be great if we could just do this?
+            <aside class="notes" data-markdown>
+              + wouldn't it be great if we could just do this?
               + directives make this possible
             </aside>
           </section>
-          <section data-markdown>
-            ![](img/donut-chart-1.png)
+          <section>
+            <div data-markdown>
+              ![](img/donut-chart-1.png)
+            </div>
+            <aside class="notes" data-markdown>
+              + yeah, it would be awesome!
+            </aside>
           </section>
 
           <section>
@@ -424,6 +442,7 @@
               + another angular feature of particular interest of data visualizer is ng-repeat for creating small multiples
 
               Small Multiples
+
                 + powerful visualization tool
                 + Popularized by Edward Tufte
                 + facilitates comparisons of change across multiple charts side by side
@@ -434,7 +453,7 @@
               ![](img/the-horse-in-motion.jpg)
             </div>
             <aside class="notes" data-markdown>
-              The classic is Eadweard Muybridge's "A horse in motion"
+              + The classic example is Eadweard Muybridge's "A horse in motion"
               + you might wonder why we can't just animate the horse. We have computers, after all...
             </aside>
           </section>
@@ -448,17 +467,10 @@
               [![](img/andrew-gelman-school-vouchers-map.png)](http://andrewgelman.com/2009/07/15/hard_sell_for_b/)
             </div>
             <aside class="notes" data-markdown>
-              + but take this example which would be impossible with a simple animation by Anrew Gelman.
-              + Show's support for school vouchers by race, income, latitude, longitude.
-              + 4 dimensions in the map alone (state, latitude, longitude, voucher support)
-              + 6 when you add the rows and columns offered by small multiples
-            </aside>
-          </section>
-          <section>
-            <div data-markdown>
-              ![](img/small-multiples-with-ng-repeat.png)
-            </div>
-            <aside class="notes" data-markdown>
+              + but take this example by Anrew Gelman which would be impossible with a simple animation by
+              + Show's support for school vouchers by race, income, and state.
+              + 2 dimensions in the map alone (voucher support by state)
+              + 4 when you add the rows and columns offered by small multiples
             </aside>
           </section>
           <section>
@@ -469,6 +481,13 @@
             </div>
             <aside class="notes" data-markdown>
               + also made possible by directives
+            </aside>
+          </section>
+          <section>
+            <div data-markdown>
+              ![](img/small-multiples-with-ng-repeat.png)
+            </div>
+            <aside class="notes" data-markdown>
             </aside>
           </section>
           <section>
@@ -493,6 +512,11 @@
           </section>
           <section>
             <div data-markdown>
+              [demo](demos/life-expectancy/index.html)
+            </div>
+          </section>
+          <section>
+            <div data-markdown>
               ## Responsive Design
               
               [demo](demos/responsive/index.html)
@@ -514,8 +538,8 @@
 
               ## Demo 1: Non-player character creator
 
-                + A hypothetical application
-                + useful if you're creating non-playable characters in a video game with a fair distribution of skill levels.
+                + "artificial" example...
+                + useful if you'd like to create and manipulate attributes of non-playable characters in a video.
 
               ## Demo 2: Simpson's Paradox
                 + Paradoxical situation of confounded statistics caused by a 3rd lucking variable.
@@ -528,7 +552,7 @@
         <section>
           <section>
             <div data-markdown>
-              # Lets make a donut chart directive
+              # __How__ to make a donut chart directive
             </div>
             <aside class="notes">
               now that you understand some of the motivations for why you would want to use angular with d3, lets talk about how.
@@ -729,32 +753,6 @@
         <section>
           <section data-markdown>
             # Directives
-          </section>
-          <section>
-            <div data-markdown>
-              wouldn't this be cool?
-              ````html
-                &lt;donut-chart&gt;&lt;/donut-chart&gt;
-              ````
-            </div>
-            <aside class="notes" data-markdown>
-              + modularity (separation of concerns)
-              + re-usability
-              + easier dependency injection via the scope
-            </aside>
-          </section>
-          <section>
-            <div data-markdown>
-              yes. yes it would.
-            </div>
-          </section>
-          <section>
-            <div data-markdown>
-              # Let's do it!
-            </div>
-            <aside class="notes" data-markdown>
-              + make a donut chart directive
-            </aside>
           </section>
           <section>
             <div data-markdown>
