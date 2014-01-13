@@ -89,6 +89,7 @@ app.controller('MainCtrl', function($scope, $window){
         , value: attrs[attr.id] || attr.value
         , min: attr.min
         , max: attr.max 
+        , name: attr.name
       }
     })
   }, true)
@@ -134,12 +135,11 @@ app.directive('radarChart', function(){
 
     var svg = d3.select(el).append('svg')
     var g = svg.append('g')
-    var axis = g.selectAll('g.axis')
 
     var area = g.append('path')
       .attr('class', 'area')
-      .style('opacity', '0.8')
-      .style('fill', '#d2322d')
+
+    var axis = g.append('g').attr('class', 'axises').selectAll('g.axis')
 
     var nobs = g.selectAll('g.nob')
 
