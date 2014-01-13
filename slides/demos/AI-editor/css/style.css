@@ -23,7 +23,7 @@ user-select: none;
 }
 .player{
   display: block;
-  clear: both;
+  /*clear: both;*/
 }
 .player .fields{
   float: left;
