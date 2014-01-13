@@ -36,19 +36,24 @@ user-select: none;
   display: block;
 }
 
-.player radar-chart .nob{
+radar-chart .nob{
   display: none;
   fill: #eee;
   stroke: #666;
+  opacity: 0.8;
 }
-.player radar-chart:hover .nob{
+radar-chart svg:hover .nob{
   display: inherit;
 }
 
-.player radar-chart .label{
+.averages radar-chart svg:hover .nob{
+  display: none;
+}
+
+radar-chart .label{
   font-size: 1.2em;
 }
 
-.player radar-chart .tick text{
+radar-chart .tick text{
   font-size: 1.2em;
 }

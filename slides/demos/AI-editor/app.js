@@ -4,8 +4,6 @@ var app = angular.module('myApp', [])
 
 app.controller('MainCtrl', function($scope, $window){
   var attrHash = {}
-
-
   angular.element($window).on('resize', $scope.$apply.bind($scope))
   var ids = 0
   $scope.attributes = []
@@ -13,10 +11,10 @@ app.controller('MainCtrl', function($scope, $window){
     var id = ++ids
     // default new attribute
     if(!attr) attr = {
-      name: 'new attribute',
-      value: 10,
-      min: 0,
-      max: 20
+      name: 'new attribute'
+      , value: 10
+      , min: 0
+      , max: 20
     }
     attr.id = id
     attrHash[attr.id] = attr
@@ -25,9 +23,9 @@ app.controller('MainCtrl', function($scope, $window){
 
   // add some mock attributes to start with
   ;[
-    { name: 'strength', value: 10, min: 0, max: 20 },
-    { name: 'speed', value: 10, min: 0, max: 20 },
-    { name: 'agility', value: 10, min: 0, max: 20 }
+      { name: 'strength', value: 10, min: 0, max: 20 }
+    , { name: 'speed', value: 10, min: 0, max: 20 }
+    , { name: 'agility', value: 10, min: 0, max: 20 }
   ].forEach($scope.addAttribute)
 
   $scope.removeAttribute = function(){
@@ -75,7 +73,30 @@ app.controller('MainCtrl', function($scope, $window){
       })
     })
   }
+
+  $scope.playerAverages = $scope.attributes
+  $scope.$watch('players', function(players){
+    var attrs = {}
+    players.forEach(function(player){
+      player.attributes.forEach(function(attr){
+        if(!attrs[attr.id]) attrs[attr.id] = 0
+        attrs[attr.id] += attr.value / players.length
+      })
+    })
+    $scope.playerAverages = $scope.attributes.map(function(attr){
+      return { 
+          id: attr.id
+        , value: attrs[attr.id] || attr.value
+        , min: attr.min
+        , max: attr.max 
+      }
+    })
+  }, true)
+
 })
+
+
+
 
 app.directive('radarChart', function(){
   function link(scope, el, attr){
@@ -89,7 +110,8 @@ app.directive('radarChart', function(){
     var angle = d3.scale.linear().range([0, Math.PI * 2])
 
     var radiusFromDatum = function(d){
-      return (d.value - d.min) / (d.max - d.min) * radius 
+      p = (d.value - d.min) / (d.max - d.min)
+      return p * radius
     }
 
     var line = d3.svg.line.radial()
@@ -106,8 +128,7 @@ app.directive('radarChart', function(){
         var p = x / radius
         if(p > 1) p = 1
         if(p < 0) p = 0
-        d.value =  p * (d.max - d.min)
-        d3.select(self).attr('cx', p * radius)
+        d.value =  p * (d.max - d.min) + d.min
       })
     })
 
@@ -117,8 +138,8 @@ app.directive('radarChart', function(){
 
     var area = g.append('path')
       .attr('class', 'area')
-      .style('opacity', '1')
-      .style('fill', '#999')
+      .style('opacity', '0.8')
+      .style('fill', '#d2322d')
 
     var nobs = g.selectAll('g.nob')
 
@@ -140,7 +161,7 @@ app.directive('radarChart', function(){
       nobs = nobs.data(data)
       nobs.enter().append('g')
         .attr('class', 'nob')
-        .append('circle').attr('r', 5)
+        .append('circle').attr('r', 7)
         .call(drag)
       nobs.call(updateNobs)
       nobs.exit().remove()

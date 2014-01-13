@@ -531,18 +531,18 @@
             <div data-markdown>
               # Interactivity across visualizations
 
-              [Demo 1](demos/AI-editor/index.html) [Demo 2](http://vudlab.com/simpsons/)
+              [Demo 1](http://vudlab.com/simpsons/) [Demo 2](demos/AI-editor/index.html)
             </div>
             <aside class="notes" data-markdown>
               + because of Angular's digest loop
 
-              ## Demo 1: Non-player character creator
+              ## Demo 1: Simpson's Paradox
+                + Paradoxical situation of confounded statistics caused by a 3rd lucking variable.
+
+              ## Demo 2: Non-player character creator
 
                 + "artificial" example...
                 + useful if you'd like to create and manipulate attributes of non-playable characters in a video.
-
-              ## Demo 2: Simpson's Paradox
-                + Paradoxical situation of confounded statistics caused by a 3rd lucking variable.
             </aside>
           </section>
         </section>
@@ -1368,8 +1368,8 @@
           <section>
             <div data-markdown>
               ````javascript
-                app.controller('MainCtrl', function($pricingData){
-                  $pricingData.getDay('2014-01-23', function(data){
+                app.controller('MainCtrl', function($pricingService){
+                  $pricingService.getDay('2014-01-23', function(data){
                     scope.data = data;
                   });
                 });
