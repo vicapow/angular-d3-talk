@@ -1,4 +1,6 @@
 # Slides from my Angular meetup talk at Google
+===
+[View Slideshow](http://vicapow.github.io/angular-d3-talk/slides/)
 
 ## Demos
 
