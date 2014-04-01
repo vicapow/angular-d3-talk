@@ -13,3 +13,8 @@ all the demos can be found under `slides/demos`. here's a few quick lines to eac
 + [Life Expectancy](slides/demos/life-expectancy/index.html)
 + [Responsive](slides/demos/responsive/index.html)
 
+## Angular + D3 Book
+
+I've written a e-book that provides a few more techniques and goes into much more detail
+
+[https://leanpub.com/d3angularjs](https://leanpub.com/d3angularjs)
