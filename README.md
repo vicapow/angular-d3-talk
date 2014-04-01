@@ -13,3 +13,9 @@ all the demos can be found under `slides/demos`. here's a few quick lines to eac
 + [Life Expectancy](http://vicapow.github.io/angular-d3-talk/slides/demos/life-expectancy/index.html)
 + [Responsive](http://vicapow.github.io/angular-d3-talk/slides/demos/responsive/index.html)
 
+
+## Angular + D3 book
+
+I've written an e-book that goes into much more detail:
+
+[https://leanpub.com/d3angularjs](https://leanpub.com/d3angularjs)
